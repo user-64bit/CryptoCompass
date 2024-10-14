@@ -1,9 +1,11 @@
 "use client";
+
+import { GradientFontTitle } from "@/components/gradient-font-title";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { Button } from "@/components/ui/button";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { WalletIcon } from "lucide-react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -12,24 +14,22 @@ import { FaGoogle } from "react-icons/fa";
 export default function Home() {
   const { setTheme } = useTheme();
   const router = useRouter();
+  const session = useSession();
 
   useEffect(() => {
     setTheme("dark");
   }, [])
+
+  if (session.data?.user) {
+    router.push("/dashboard");
+  }
 
   return (
     <BackgroundBeamsWithCollision>
       <div>
         <h2 className="text-2xl relative z-20 md:text-4xl lg:text-7xl font-bold text-center text-black dark:text-white font-sans tracking-tight">
           All Your Digital Assets,{" "}
-          <div className="relative mx-auto inline-block w-max [filter:drop-shadow(0px_1px_3px_rgba(27,_37,_80,_0.14))]">
-            <div className="absolute left-0 top-[1px] bg-clip-text bg-no-repeat text-transparent bg-gradient-to-r py-4 from-purple-500 via-violet-500 to-pink-500 [text-shadow:0_0_rgba(0,0,0,0.1)]">
-              <span className="">One Dashboard.</span>
-            </div>
-            <div className="relative bg-clip-text text-transparent bg-no-repeat bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 py-4">
-              <span className="">One Dashboard.</span>
-            </div>
-          </div>
+          <GradientFontTitle text="One Dashboard." />
         </h2>
         <h6>
 
@@ -48,7 +48,9 @@ export default function Home() {
               role="button"
               onClick={async (e) => {
                 e.preventDefault();
-                await signIn('google');
+                await signIn('google', {
+                  callbackUrl: '/dashboard'
+                });
               }}
             >
               <FaGoogle className="w-8 h-8" />
@@ -57,7 +59,7 @@ export default function Home() {
               role="button"
               onClick={async (e) => {
                 e.preventDefault();
-                await signIn('google');
+                await signIn('github');
               }}
             >
               <GitHubLogoIcon className="w-8 h-8" />
