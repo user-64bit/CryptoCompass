@@ -1,6 +1,6 @@
+import { CreateGroup } from "@/components/CreateGroup";
 import { GradientFontTitle } from "@/components/gradient-font-title";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from '@/components/ui/button';
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import dynamic from 'next/dynamic';
@@ -11,6 +11,28 @@ import { redirect } from "next/navigation";
 const GroupGrid = dynamic(() => import('@/components/GroupBox').then(mod => mod.GroupGrid), {
   ssr: false
 });
+
+const Dashboard = async () => {
+  const countOfGroups = 1;
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    redirect("/");
+  }
+
+
+  return (
+    <div className="md:w-3/5 min-h-screen mx-auto">
+      <Header image={session.user.image!} />
+      <div className='flex justify-end pt-6'>
+        <CreateGroup />
+      </div>
+      {
+        // TODO: do something with countOfGroups ;)
+        !countOfGroups ? <EmptyDashboard /> : <GroupGrid groups={[...Array(countOfGroups)]} />
+      }
+    </div>
+  );
+};
 
 const Header = ({ image }: { image?: string }) => (
   <div className="flex justify-between pt-4 border-b">
@@ -43,32 +65,5 @@ const EmptyDashboard = () => (
     </div>
   </div>
 );
-
-const Dashboard = async () => {
-  const countOfGroups = 1;
-  const session = await getServerSession(authOptions);
-  if (!session?.user) {
-    redirect("/");
-  }
-
-
-  return (
-    <div className="md:w-3/5 min-h-screen mx-auto">
-      <Header image={session.user.image!} />
-      <div className='flex justify-end pt-6'>
-        <Button
-          className="bg-gradient-to-br from-purple-500 to-blue-500 font-bold hover:opacity-80 text-white"
-          size={"xl"}
-        >
-          Create Group
-        </Button>
-      </div>
-      {
-        // TODO: do something with countOfGroups ;)
-        !countOfGroups ? <EmptyDashboard /> : <GroupGrid groups={[...Array(countOfGroups)]} />
-      }
-    </div>
-  );
-};
 
 export default Dashboard;

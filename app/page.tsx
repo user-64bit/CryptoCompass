@@ -5,7 +5,7 @@ import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-w
 import { Button } from "@/components/ui/button";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { WalletIcon } from "lucide-react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -31,9 +31,6 @@ export default function Home() {
           All Your Digital Assets,{" "}
           <GradientFontTitle text="One Dashboard." />
         </h2>
-        <h6>
-
-        </h6>
         <div className="flex flex-col justify-center items-center">
           <Button
             className="font-bold"
