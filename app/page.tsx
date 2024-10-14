@@ -1,9 +1,9 @@
 "use client";
-
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { Button } from "@/components/ui/button";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { WalletIcon } from "lucide-react";
+import { signIn } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -16,7 +16,6 @@ export default function Home() {
   useEffect(() => {
     setTheme("dark");
   }, [])
-
 
   return (
     <BackgroundBeamsWithCollision>
@@ -45,15 +44,27 @@ export default function Home() {
             What is Crypto Wallet?
           </Button>
           <div className="flex gap-x-5 mt-4">
-            <button>
+            <div
+              role="button"
+              onClick={async (e) => {
+                e.preventDefault();
+                await signIn();
+              }}
+            >
               <FaGoogle className="w-8 h-8" />
-            </button>
-            <button>
+            </div>
+            <div
+              role="button"
+              onClick={async (e) => {
+                e.preventDefault();
+                await signIn();
+              }}
+            >
               <GitHubLogoIcon className="w-8 h-8" />
-            </button>
-            <button>
+            </div>
+            <div>
               <WalletIcon className="w-8 h-8" />
-            </button>
+            </div>
           </div>
         </div>
 

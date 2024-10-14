@@ -17,3 +17,5 @@
 
 
 -> Your Portfolio worth, yesterday, month ago, year ago, after year (just prediction)
+
+-> implement JWT
