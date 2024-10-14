@@ -48,7 +48,7 @@ export default function Home() {
               role="button"
               onClick={async (e) => {
                 e.preventDefault();
-                await signIn();
+                await signIn('google');
               }}
             >
               <FaGoogle className="w-8 h-8" />
@@ -57,7 +57,7 @@ export default function Home() {
               role="button"
               onClick={async (e) => {
                 e.preventDefault();
-                await signIn();
+                await signIn('google');
               }}
             >
               <GitHubLogoIcon className="w-8 h-8" />
