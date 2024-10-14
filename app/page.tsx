@@ -2,14 +2,17 @@
 
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { Button } from "@/components/ui/button";
-import { ReloadIcon } from "@radix-ui/react-icons";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { WalletIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { FaGoogle } from "react-icons/fa";
 
 export default function Home() {
   const { setTheme } = useTheme();
   const router = useRouter();
+
   useEffect(() => {
     setTheme("dark");
   }, [])
@@ -32,24 +35,28 @@ export default function Home() {
         <h6>
 
         </h6>
-        <div className="flex justify-center gap-x-4">
-          <Button
-            className="font-bold"
-            size={"xl"}
-          >
-            {/* <ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> */}
-            Get Started
-          </Button>
+        <div className="flex flex-col justify-center items-center">
           <Button
             className="font-bold"
             size={"xl"}
             variant={"secondary"}
             onClick={() => router.push("/learn-more")}
           >
-            {/* <ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> */}
             What is Crypto Wallet?
           </Button>
+          <div className="flex gap-x-5 mt-4">
+            <button>
+              <FaGoogle className="w-8 h-8" />
+            </button>
+            <button>
+              <GitHubLogoIcon className="w-8 h-8" />
+            </button>
+            <button>
+              <WalletIcon className="w-8 h-8" />
+            </button>
+          </div>
         </div>
+
       </div>
     </BackgroundBeamsWithCollision>
   );
