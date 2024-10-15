@@ -13,10 +13,11 @@ const blockchainOptions = [
   "Unknown"
 ]
 
-export function EditableGroupRow({ index, publicKey, initialBlockchain }: {
+export function EditableGroupRow({ index, publicKey, initialBlockchain, balance }: {
   index: number;
   publicKey: string;
   initialBlockchain: string;
+  balance: string;
 }) {
   const [blockchain, setBlockchain] = useState(initialBlockchain);
 
@@ -42,7 +43,7 @@ export function EditableGroupRow({ index, publicKey, initialBlockchain }: {
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className='text-right'>{100}</TableCell>
+      <TableCell className='text-right'>{balance}</TableCell>
     </TableRow>
   )
 }

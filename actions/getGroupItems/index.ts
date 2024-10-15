@@ -20,6 +20,7 @@ export const getGroupItemsAction = async ({
       id: true,
       name: true,
       blockchain: true,
+      balance: true,
     },
   });
 

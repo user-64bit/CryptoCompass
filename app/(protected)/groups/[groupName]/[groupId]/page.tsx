@@ -47,13 +47,14 @@ export default async function Group({ params }: { params: { groupName: string, g
               index={index}
               publicKey={item.name}
               initialBlockchain={item.blockchain}
+              balance={item.balance}
             />
           ))}
         </TableBody>
         <TableFooter>
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-right">$2,500.00</TableCell>
+            <TableCell className="text-right">${Items.reduce((acc, item) => acc + parseFloat(item.balance), 0)}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>
