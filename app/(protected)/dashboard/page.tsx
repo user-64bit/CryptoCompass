@@ -1,10 +1,8 @@
 import { CreateGroup } from "@/components/CreateGroup";
-import { GradientFontTitle } from "@/components/gradient-font-title";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Header } from "@/components/Header";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import dynamic from 'next/dynamic';
-import Image from "next/image";
 import { redirect } from "next/navigation";
 
 // Import the GroupGrid as a client component
@@ -19,10 +17,9 @@ const Dashboard = async () => {
     redirect("/");
   }
 
-
   return (
     <div className="md:w-3/5 min-h-screen mx-auto">
-      <Header image={session.user.image!} />
+      <Header image={session.user.image!} email={session.user.email!} />
       <div className='flex justify-end pt-6'>
         <CreateGroup />
       </div>
@@ -33,27 +30,6 @@ const Dashboard = async () => {
     </div>
   );
 };
-
-const Header = ({ image }: { image?: string }) => (
-  <div className="flex justify-between pt-4 border-b">
-    <div className="flex items-center cursor-pointer">
-      <Image
-        src="/logo.png"
-        width={55}
-        height={55}
-        alt="Logo"
-        className="rounded-full"
-      />
-      <span className="text-2xl font-bold ml-2">
-        <GradientFontTitle text="Crypto Compass" />
-      </span>
-    </div>
-    <Avatar className="h-14 w-14 cursor-pointer">
-      <AvatarImage src={image} alt="@user-64bit" />
-      <AvatarFallback>CC</AvatarFallback>
-    </Avatar>
-  </div>
-);
 
 const EmptyDashboard = () => (
   <div className="flex flex-col items-center justify-center min-h-[calc(100vh-160px)] py-2">

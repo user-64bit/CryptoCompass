@@ -1,12 +1,18 @@
-const GroupBox = ({ text }: { text: string }) => {
+const GroupBox = ({ text, onClick }: { text: string; onClick?: () => void }) => {
   return (
-    <div className="group w-full h-48 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg shadow-lg overflow-hidden cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1">
+    <div
+      className="group w-full h-48 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg shadow-lg overflow-hidden cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1"
+      role="button"
+      aria-label={`Group ${text}`}
+      onClick={onClick}
+    >
       <div className="w-full h-full flex items-center justify-center transition-opacity duration-300 group-hover:opacity-90">
         <span className="text-white text-xl font-bold">{text}</span>
       </div>
     </div>
   );
 };
+
 
 const GroupGrid = ({ groups }: {
   groups: any[],
