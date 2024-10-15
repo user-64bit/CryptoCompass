@@ -5,7 +5,7 @@ import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-w
 import { Button } from "@/components/ui/button";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { WalletIcon } from "lucide-react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -18,7 +18,7 @@ export default function Home() {
 
   useEffect(() => {
     setTheme("dark");
-  }, [])
+  }, []);
 
   if (session.data?.user) {
     router.push("/dashboard");
@@ -28,8 +28,7 @@ export default function Home() {
     <BackgroundBeamsWithCollision>
       <div>
         <h2 className="text-2xl relative z-20 md:text-4xl lg:text-7xl font-bold text-center text-black dark:text-white font-sans tracking-tight">
-          All Your Digital Assets,{" "}
-          <GradientFontTitle text="One Dashboard." />
+          All Your Digital Assets, <GradientFontTitle text="One Dashboard." />
         </h2>
         <div className="flex flex-col justify-center items-center">
           <Button
@@ -45,8 +44,8 @@ export default function Home() {
               role="button"
               onClick={async (e) => {
                 e.preventDefault();
-                await signIn('google', {
-                  callbackUrl: '/dashboard'
+                await signIn("google", {
+                  callbackUrl: "/dashboard",
                 });
               }}
             >
@@ -56,7 +55,7 @@ export default function Home() {
               role="button"
               onClick={async (e) => {
                 e.preventDefault();
-                await signIn('github');
+                await signIn("github");
               }}
             >
               <GitHubLogoIcon className="w-8 h-8" />
@@ -66,7 +65,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
       </div>
     </BackgroundBeamsWithCollision>
   );

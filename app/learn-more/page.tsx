@@ -1,4 +1,3 @@
-
 export default function LearnMore() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -14,12 +13,14 @@ export default function LearnMore() {
           </div>
         </h1>
         <p className="text-lg text-center">
-          Easily connect your wallet to view all your cryptocurrencies, NFTs, and token balances in one place.
-          Our platform provides a simple and secure way to keep track of your digital assets, offering real-time
-          insights into your portfolio. Whether you're managing tokens or exploring NFTs,
-          we've got you covered with a clean, intuitive dashboard designed for seamless user experience.
+          Easily connect your wallet to view all your cryptocurrencies, NFTs,
+          and token balances in one place. Our platform provides a simple and
+          secure way to keep track of your digital assets, offering real-time
+          insights into your portfolio. Whether you&apos;re managing tokens or
+          exploring NFTs, we&apos;ve got you covered with a clean, intuitive
+          dashboard designed for seamless user experience.
         </p>
       </div>
     </div>
-  )
+  );
 }

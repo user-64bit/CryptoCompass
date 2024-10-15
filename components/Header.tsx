@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import { signOut } from "next-auth/react"
-import Image from "next/image"
-import { GradientFontTitle } from "@/components/gradient-font-title"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { signOut } from "next-auth/react";
+import Image from "next/image";
+import { GradientFontTitle } from "@/components/gradient-font-title";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 interface HeaderProps {
-  image?: string
-  email?: string
+  image?: string;
+  email?: string;
 }
 
 export const Header = ({ image, email }: HeaderProps) => {
@@ -39,12 +39,14 @@ export const Header = ({ image, email }: HeaderProps) => {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem className="font-medium text-white text-muted-foreground">{email}</DropdownMenuItem> 
+          <DropdownMenuItem className="font-medium text-white text-muted-foreground">
+            {email}
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={async () => await signOut()}>
             Sign out
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  )
-}
+  );
+};

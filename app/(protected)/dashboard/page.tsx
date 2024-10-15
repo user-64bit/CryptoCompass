@@ -2,13 +2,16 @@ import { CreateGroup } from "@/components/CreateGroup";
 import { Header } from "@/components/Header";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 
 // Import the GroupGrid as a client component
-const GroupGrid = dynamic(() => import('@/components/GroupBox').then(mod => mod.GroupGrid), {
-  ssr: false
-});
+const GroupGrid = dynamic(
+  () => import("@/components/GroupBox").then((mod) => mod.GroupGrid),
+  {
+    ssr: false,
+  },
+);
 
 const Dashboard = async () => {
   const countOfGroups = 1;
@@ -20,12 +23,16 @@ const Dashboard = async () => {
   return (
     <div className="md:w-3/5 min-h-screen mx-auto">
       <Header image={session.user.image!} email={session.user.email!} />
-      <div className='flex justify-end pt-6'>
+      <div className="flex justify-end pt-6">
         <CreateGroup />
       </div>
       {
         // TODO: do something with countOfGroups ;)
-        !countOfGroups ? <EmptyDashboard /> : <GroupGrid groups={[...Array(countOfGroups)]} />
+        !countOfGroups ? (
+          <EmptyDashboard />
+        ) : (
+          <GroupGrid groups={[...Array(countOfGroups)]} />
+        )
       }
     </div>
   );

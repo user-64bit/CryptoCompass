@@ -7,7 +7,7 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogTitle,  
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -26,7 +26,7 @@ export const CreateGroup = () => {
   });
 
   const handleCreateGroup = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
     if (!groupName || !publicKeys) {
@@ -48,7 +48,7 @@ export const CreateGroup = () => {
 
   const handleInputChange = (
     field: "groupName" | "publicKeys",
-    value: string
+    value: string,
   ) => {
     if (field === "groupName") {
       setGroupName(value);
