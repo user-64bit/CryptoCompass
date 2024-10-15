@@ -26,24 +26,24 @@ model User {
 }
 
 model Group {
-  id          String      @id @default(cuid())
-  name        String
-  public_keys String
-  publicKey   PublicKey[]
-  userId      String
-  User        User        @relation(fields: [userId], references: [email])
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id        String      @id @default(cuid())
+  name      String
+  publicKey PublicKey[]
+  userId    String
+  User      User        @relation(fields: [userId], references: [email])
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 model PublicKey {
-  id        String   @id @default(cuid())
-  publicKey String
-  userId    String
-  groupId   String
-  Group     Group    @relation(fields: [groupId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(cuid())
+  name       String
+  userId     String
+  groupId    String
+  blockchain String
+  Group      Group    @relation(fields: [groupId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Account {

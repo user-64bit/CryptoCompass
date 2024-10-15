@@ -1,5 +1,6 @@
 "use client";
 
+import { createGroupAction } from "@/actions/createGroup";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,12 +13,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import db from "@/db";
-import { useSession } from "next-auth/react";
-import { createGroup } from "@/actions/createGroup";
-import { useRouter } from "next/navigation";
 
 export const CreateGroup = () => {
   const [groupName, setGroupName] = useState("");
@@ -33,10 +32,15 @@ export const CreateGroup = () => {
     if (!groupName || !publicKeys) {
       return;
     }
-    const group = await createGroup({ name: groupName, publicKeys, email: session.data?.user?.email! });
+    const group = await createGroupAction({
+      name: groupName,
+      publicKeys,
+      userId: session.data?.user?.email!,
+    });
     if (group) {
       toast("Group has been created", {
-        description: "It will take a few seconds to generate your beatuful group",
+        description:
+          "It will take a few seconds to generate your beatuful group",
       });
     }
     setIsDialogOpen(false);

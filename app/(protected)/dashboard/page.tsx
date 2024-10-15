@@ -1,37 +1,33 @@
+import { getGroupsAction } from "@/actions/getGroups";
 import { CreateGroup } from "@/components/CreateGroup";
-import { Header } from "@/components/Header";
+import { GroupBox } from "@/components/GroupBox";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
-import { getGroups } from "@/actions/getGroups";
-
-const GroupGrid = dynamic(
-  () => import("@/components/GroupBox").then((mod) => mod.GroupGrid),
-  {
-    ssr: false,
-  },
-);
 
 const Dashboard = async () => {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
     redirect("/");
   }
-  const Groups = await getGroups({ email: session.user.email! });
+  const groups = await getGroupsAction({ email: session.user.email! });
 
   return (
-    <div className="md:w-3/5 min-h-screen mx-auto">
-      <Header image={session.user.image!} email={session.user.email!} />
+    <div className="">
       <div className="flex justify-end pt-6">
         <CreateGroup />
       </div>
       {
-        // TODO: do something with countOfGroups ;)
-        !Groups.length ? (
+        !groups.length ? (
           <EmptyDashboard />
         ) : (
-          <GroupGrid groups={Groups} />
+          <div className="container mx-auto px-4 py-8">
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {groups.map((group, index) => (
+                <GroupBox key={index} text={group.name} groupId={group.id} />
+              ))}
+            </div>
+          </div>
         )
       }
     </div>

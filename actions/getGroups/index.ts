@@ -2,14 +2,19 @@
 
 import db from "@/db";
 
-interface getGroupsProps {
+interface getGroupsActionProps {
   email: string;
 }
 
-export const getGroups = async ({ email }: getGroupsProps) => {
+export const getGroupsAction = async ({ email }: getGroupsActionProps) => {
   const groups = await db.group.findMany({
     where: {
       userId: email,
+    },
+    select: {
+      id: true,
+      name: true,
+      userId: true,
     },
   });
 

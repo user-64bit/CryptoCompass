@@ -1,25 +1,44 @@
 "use server";
 
 import db from "@/db";
+import { getBlockChainByPublicKey } from "@/lib/getBlockChainByPublicKey";
+import { uniq } from "@/lib/helper";
 
-interface CreateGroupProps {
+interface CreateGroupActionProps {
   name: string;
   publicKeys: string;
-  email: string;
+  userId: string;
 }
 
-export const createGroup = async ({
+export const createGroupAction = async ({
   name,
   publicKeys,
-  email,
-}: CreateGroupProps) => {
-  const group = await db.group.create({
-    data: {
-      name,
-      public_keys: publicKeys,
-      userId: email,
-    },
-  });
+  userId,
+}: CreateGroupActionProps) => {
+  const uniqePublicKeys = uniq(publicKeys.split(",").map((key) => key.trim()));
+  if (!uniqePublicKeys) {
+    return null;
+  }
+  try {
+    const group = await db.group.create({
+      data: {
+        name,
+        userId,
+      },
+    });
 
-  return group;
+    const items = await db.publicKey.createMany({
+      data: uniqePublicKeys.map((publicKey) => ({
+        name: publicKey,
+        userId,
+        groupId: group.id,
+        blockchain: getBlockChainByPublicKey(publicKey),
+      })),
+    });
+
+    return group;
+  } catch (error) {
+    console.error("Error creating group or public keys:", error);
+    return null;
+  }
 };
