@@ -4,12 +4,23 @@ import db from "@/db";
 
 interface modifyBlockChainProps {
   id: string;
-  email: string;
+  groupId: string;
+  blockchain: string;
 }
 
 export const modifyBlockChain = async ({
   id,
-  email,
+  groupId,
+  blockchain,
 }: modifyBlockChainProps) => {
-  // Todo: modify the blockchain of the group
+  const data = await db.publicKey.update({
+    where: {
+      id,
+      groupId,
+    },
+    data: {
+      blockchain,
+    },
+  });
+  return data;
 };

@@ -18,6 +18,7 @@ export const getGroupItemsAction = async ({
     },
     select: {
       id: true,
+      groupId: true,
       name: true,
       blockchain: true,
       balance: true,

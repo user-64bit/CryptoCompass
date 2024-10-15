@@ -1,8 +1,18 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { TableCell, TableRow } from "@/components/ui/table"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useState } from "react";
+import { TableCell, TableRow } from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { modifyBlockChain } from "@/actions/modifyBlockChain";
+import { Loader2 } from "lucide-react";
+import { Spinner } from "./spinner";
+// import { LoadingSpinner } from './loading-spinner'
 
 const blockchainOptions = [
   "Bitcoin",
@@ -10,40 +20,68 @@ const blockchainOptions = [
   "Solana",
   "Cardano",
   "Polkadot",
-  "Unknown"
-]
+  "Unknown",
+];
 
-export function EditableGroupRow({ index, publicKey, initialBlockchain, balance }: {
+export function EditableGroupRow({
+  id,
+  groupId,
+  index,
+  publicKey,
+  initialBlockchain,
+  balance,
+}: {
+  id: string;
+  groupId: string;
   index: number;
   publicKey: string;
   initialBlockchain: string;
   balance: string;
 }) {
   const [blockchain, setBlockchain] = useState(initialBlockchain);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleOnChange = async (value: string) => {
+    setIsLoading(true);
+    setBlockchain(value);
+
+    const updatePromise = modifyBlockChain({ id, groupId, blockchain: value });
+    const timerPromise = new Promise((resolve) => setTimeout(resolve, 2000));
+
+    try {
+      await Promise.all([updatePromise, timerPromise]);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <TableRow>
       <TableCell className="font-medium">{index + 1}</TableCell>
       <TableCell>{publicKey}</TableCell>
-      <TableCell>
-        <Select value={blockchain} onValueChange={setBlockchain}>
-          <SelectTrigger className="w-full">
-            <SelectValue>{blockchain}</SelectValue>
-          </SelectTrigger>
-          <SelectContent>
-            {blockchainOptions.map((option) => (
-              <SelectItem
-                key={option}
-                value={option}
-                onChange={() => { }}
-              >
-                {option}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </TableCell>
-      <TableCell className='text-right'>{balance}</TableCell>
+      {!isLoading ? (
+        <TableCell>
+          <Select value={blockchain} onValueChange={handleOnChange}>
+            <SelectTrigger className="w-full">
+              <SelectValue>{blockchain}</SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              {blockchainOptions.map((option) => (
+                <SelectItem key={option} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </TableCell>
+      ) : (
+        <TableCell className="flex justify-center items-center">
+          <Spinner />
+        </TableCell>
+      )}
+      <TableCell className="text-right">{balance}</TableCell>
     </TableRow>
-  )
+  );
 }

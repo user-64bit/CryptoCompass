@@ -27,7 +27,7 @@ export default async function Group({ params }: { params: { groupName: string, g
           <TableRow>
             <TableHead className="w-[100px]">#</TableHead>
             <TableHead>Public Key</TableHead>
-            <TableHead>
+            <TableHead className="text-center">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <p>Block Chain*</p>
@@ -44,6 +44,8 @@ export default async function Group({ params }: { params: { groupName: string, g
           {Items?.map((item, index) => (
             <EditableGroupRow
               key={item.id}
+              id={item.id}
+              groupId={item.groupId}
               index={index}
               publicKey={item.name}
               initialBlockchain={item.blockchain}
