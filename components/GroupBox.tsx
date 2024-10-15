@@ -16,7 +16,7 @@ const GroupBox = ({
       role="button"
       aria-label={`Group ${text}`}
       onClick={() => {
-        router.push(`groups/${text}/${groupId}`);
+        router.push(`groups/${text.split(" ").join("-")}/${groupId}`);
       }}
     >
       <div className="w-full h-full flex items-center justify-center transition-opacity duration-300 group-hover:opacity-90">

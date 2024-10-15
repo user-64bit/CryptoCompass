@@ -20,9 +20,9 @@ export default async function Group({ params }: { params: { groupName: string, g
 
   return (
     <div className="container mx-auto py-10">
-      <h2 className="text-center text-2xl font-bold pb-10">Group: #{params.groupName}</h2>
+      <h2 className="text-center text-2xl font-bold pb-10">Group: #{params.groupName.split("-").join(" ")}</h2>
       <Table>
-        <TableCaption>A list of public keys of #{params.groupName}.</TableCaption>
+        <TableCaption>A list of public keys of #{params.groupName.split("-").join(" ")}.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">#</TableHead>

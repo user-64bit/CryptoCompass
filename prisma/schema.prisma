@@ -41,6 +41,7 @@ model PublicKey {
   userId     String
   groupId    String
   blockchain String
+  balance    String
   Group      Group    @relation(fields: [groupId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt

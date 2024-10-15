@@ -32,6 +32,7 @@ export const createGroupAction = async ({
         name: publicKey,
         userId,
         groupId: group.id,
+        balance: "100",
         blockchain: getBlockChainByPublicKey(publicKey),
       })),
     });
