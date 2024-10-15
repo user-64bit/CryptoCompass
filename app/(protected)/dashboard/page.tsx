@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
+import { getGroups } from "@/actions/getGroups";
 
 const GroupGrid = dynamic(
   () => import("@/components/GroupBox").then((mod) => mod.GroupGrid),
@@ -13,11 +14,11 @@ const GroupGrid = dynamic(
 );
 
 const Dashboard = async () => {
-  const countOfGroups = 1;
   const session = await getServerSession(authOptions);
   if (!session?.user) {
     redirect("/");
   }
+  const Groups = await getGroups({ email: session.user.email! });
 
   return (
     <div className="md:w-3/5 min-h-screen mx-auto">
@@ -27,10 +28,10 @@ const Dashboard = async () => {
       </div>
       {
         // TODO: do something with countOfGroups ;)
-        !countOfGroups ? (
+        !Groups.length ? (
           <EmptyDashboard />
         ) : (
-          <GroupGrid groups={[...Array(countOfGroups)]} />
+          <GroupGrid groups={Groups} />
         )
       }
     </div>

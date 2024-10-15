@@ -16,13 +16,15 @@ import { useState } from "react";
 import { toast } from "sonner";
 import db from "@/db";
 import { useSession } from "next-auth/react";
-import { createGroup } from "@/actions/crateGroup";
+import { createGroup } from "@/actions/createGroup";
+import { useRouter } from "next/navigation";
 
 export const CreateGroup = () => {
   const [groupName, setGroupName] = useState("");
   const [publicKeys, setPublicKeys] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const session = useSession();
+  const router = useRouter();
 
   const handleCreateGroup = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -40,6 +42,8 @@ export const CreateGroup = () => {
     setIsDialogOpen(false);
     setGroupName("");
     setPublicKeys("");
+    // Todo: redirect to /Groupid
+    router.refresh();
   };
 
   const handleInputChange = (

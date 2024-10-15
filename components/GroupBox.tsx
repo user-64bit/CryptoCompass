@@ -19,15 +19,20 @@ const GroupBox = ({
   );
 };
 
-const GroupGrid = ({
-  groups,
-}: {
-  groups: { name: string; publicKeys: string[] }[];
-}) => (
+interface GroupProps {
+  id: string;
+  name: string;
+  public_keys: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const GroupGrid = ({ groups }: { groups: GroupProps[] }) => (
   <div className="container mx-auto px-4 py-8">
-    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-6">
-      {groups.map((_, index) => (
-        <GroupBox key={index} text={`Group ${index + 1}`} />
+    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {groups.map((group, index) => (
+        <GroupBox key={index} text={group.name} />
       ))}
     </div>
   </div>
