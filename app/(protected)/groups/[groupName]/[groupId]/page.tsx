@@ -1,5 +1,5 @@
-import { getGroupItemsAction } from "@/actions/getGroupItems"
-import { EditableGroupRow } from "@/components/EditableGroupRow"
+import { getGroupItemsAction } from "@/actions/getGroupItems";
+import { EditableGroupRow } from "@/components/EditableGroupRow";
 import {
   Table,
   TableBody,
@@ -9,20 +9,35 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { getServerSession } from "next-auth"
+} from "@/components/ui/table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { getServerSession } from "next-auth";
 
-export default async function Group({ params }: { params: { groupName: string, groupId: string } }) {
+export default async function Group({
+  params,
+}: {
+  params: { groupName: string; groupId: string };
+}) {
   const session = await getServerSession();
 
-  const Items = await getGroupItemsAction({ groupId: params.groupId, userId: session?.user?.email! });
+  const Items = await getGroupItemsAction({
+    groupId: params.groupId,
+    userId: session?.user?.email!,
+  });
 
   return (
     <div className="container mx-auto py-10">
-      <h2 className="text-center text-2xl font-bold pb-10">Group: #{params.groupName.split("-").join(" ")}</h2>
+      <h2 className="text-center text-2xl font-bold pb-10">
+        Group: #{params.groupName.split("-").join(" ")}
+      </h2>
       <Table>
-        <TableCaption>A list of public keys of #{params.groupName.split("-").join(" ")}.</TableCaption>
+        <TableCaption>
+          A list of public keys of #{params.groupName.split("-").join(" ")}.
+        </TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">#</TableHead>
@@ -33,7 +48,10 @@ export default async function Group({ params }: { params: { groupName: string, g
                   <p>Block Chain*</p>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>We tried to predict the blockchain, but if we're not correct then you can change it.</p>
+                  <p>
+                    We tried to predict the blockchain, but if we're not correct
+                    then you can change it.
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </TableHead>
@@ -56,10 +74,12 @@ export default async function Group({ params }: { params: { groupName: string, g
         <TableFooter>
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-right">${Items.reduce((acc, item) => acc + parseFloat(item.balance), 0)}</TableCell>
+            <TableCell className="text-right">
+              ${Items.reduce((acc, item) => acc + parseFloat(item.balance), 0)}
+            </TableCell>
           </TableRow>
         </TableFooter>
       </Table>
-    </div >
-  )
+    </div>
+  );
 }

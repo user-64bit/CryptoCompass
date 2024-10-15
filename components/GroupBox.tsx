@@ -2,13 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-const GroupBox = ({
-  text,
-  groupId,
-}: {
-  text: string;
-  groupId: string
-}) => {
+const GroupBox = ({ text, groupId }: { text: string; groupId: string }) => {
   const router = useRouter();
   return (
     <div

@@ -17,19 +17,17 @@ const Dashboard = async () => {
       <div className="flex justify-end pt-6">
         <CreateGroup />
       </div>
-      {
-        !groups.length ? (
-          <EmptyDashboard />
-        ) : (
-          <div className="container mx-auto px-4 py-8">
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {groups.map((group, index) => (
-                <GroupBox key={index} text={group.name} groupId={group.id} />
-              ))}
-            </div>
+      {!groups.length ? (
+        <EmptyDashboard />
+      ) : (
+        <div className="container mx-auto px-4 py-8">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {groups.map((group, index) => (
+              <GroupBox key={index} text={group.name} groupId={group.id} />
+            ))}
           </div>
-        )
-      }
+        </div>
+      )}
     </div>
   );
 };
