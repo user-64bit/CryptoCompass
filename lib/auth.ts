@@ -1,4 +1,4 @@
-import prisma from "@/db";
+import db from "@/db";
 import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions = {
@@ -15,12 +15,12 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET || "secret",
   callbacks: {
     async signIn({ user }: any) {
-      const existingUser = await prisma.user.findUnique({
+      const existingUser = await db.user.findUnique({
         where: { email: user.email },
       });
 
       if (!existingUser) {
-        await prisma.user.create({
+        await db.user.create({
           data: {
             email: user.email,
             name: user.name,

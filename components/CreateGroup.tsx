@@ -14,26 +14,32 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
+import db from "@/db";
+import { useSession } from "next-auth/react";
+import { createGroup } from "@/actions/crateGroup";
 
 export const CreateGroup = () => {
   const [groupName, setGroupName] = useState("");
   const [publicKeys, setPublicKeys] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const session = useSession();
 
-  const handleCreateGroup = (
+  const handleCreateGroup = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
     if (!groupName || !publicKeys) {
       return;
     }
-    toast("Group has been created", {
-      description: "It will take a few seconds to generate your beatuful group",
-    });
+    const group = await createGroup({ name: groupName, publicKeys, email: session.data?.user?.email! });
+    if (group) {
+      toast("Group has been created", {
+        description: "It will take a few seconds to generate your beatuful group",
+      });
+    }
     setIsDialogOpen(false);
     setGroupName("");
     setPublicKeys("");
-    // Todo: make db call and create group
   };
 
   const handleInputChange = (
