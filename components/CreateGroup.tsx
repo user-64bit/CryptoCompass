@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,17 +12,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 import { toast } from "sonner";
-import { CheckCircle2, XCircle } from "lucide-react";
 
 export const CreateGroup = () => {
   const [groupName, setGroupName] = useState("");
   const [publicKeys, setPublicKeys] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [touchedFields, setTouchedFields] = useState({
-    groupName: false,
-    publicKeys: false,
-  });
 
   const handleCreateGroup = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -33,16 +28,11 @@ export const CreateGroup = () => {
       return;
     }
     toast("Group has been created", {
-      description: "Sunday, December 03, 2023 at 9:00 AM",
-      action: {
-        label: "Undo",
-        onClick: () => console.log("Undo"),
-      },
+      description: "It will take a few seconds to generate your beatuful group",
     });
     setIsDialogOpen(false);
     setGroupName("");
     setPublicKeys("");
-    setTouchedFields({ groupName: false, publicKeys: false });
     // Todo: make db call and create group
   };
 
@@ -55,30 +45,22 @@ export const CreateGroup = () => {
     } else {
       setPublicKeys(value);
     }
-    setTouchedFields((prev) => ({ ...prev, [field]: true }));
   };
 
   const renderValidationMessage = (field: "groupName" | "publicKeys") => {
     const value = field === "groupName" ? groupName : publicKeys;
-    if (!touchedFields[field]) return null;
-
     return value.length > 0 ? (
-      <span className="text-green-500 font-semibold flex items-center gap-1">
-        <CheckCircle2 className="w-4 h-4" />
-        Valid
+      <span className="text-green-500 font-semibold flex items-center gap-1 ml-1">
+        ✓
       </span>
     ) : (
-      <span className="text-red-500 font-semibold flex items-center gap-1">
-        <XCircle className="w-4 h-4" />
-        Required*
+      <span className="text-red-500 font-semibold flex items-center gap-1 ml-1">
+        ✗
       </span>
     );
   };
 
   const handleDialogChange = (open: boolean) => {
-    if (!open) {
-      setTouchedFields({ groupName: false, publicKeys: false });
-    }
     setIsDialogOpen(open);
   };
 
@@ -104,13 +86,12 @@ export const CreateGroup = () => {
             <Input
               id="name"
               value={groupName}
-              onChange={(e) => handleInputChange("groupName", e.target.value)}
-              onBlur={() =>
-                setTouchedFields((prev) => ({ ...prev, groupName: true }))
-              }
+              onChange={(e) => {
+                e.preventDefault();
+                handleInputChange("groupName", e.target.value);
+              }}
               className="col-span-3"
               placeholder="Group name"
-              aria-invalid={touchedFields.groupName && groupName.length === 0}
             />
             {renderValidationMessage("groupName")}
           </div>
@@ -121,13 +102,12 @@ export const CreateGroup = () => {
             <Textarea
               id="pkey"
               value={publicKeys}
-              onChange={(e) => handleInputChange("publicKeys", e.target.value)}
-              onBlur={() =>
-                setTouchedFields((prev) => ({ ...prev, publicKeys: true }))
-              }
+              onChange={(e) => {
+                e.preventDefault();
+                handleInputChange("publicKeys", e.target.value);
+              }}
               className="col-span-3"
               placeholder="pb_key1, pb_key2, ..."
-              aria-invalid={touchedFields.publicKeys && publicKeys.length === 0}
             />
             {renderValidationMessage("publicKeys")}
           </div>

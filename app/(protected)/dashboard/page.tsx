@@ -5,7 +5,6 @@ import { getServerSession } from "next-auth";
 import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 
-// Import the GroupGrid as a client component
 const GroupGrid = dynamic(
   () => import("@/components/GroupBox").then((mod) => mod.GroupGrid),
   {
