@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 interface HeaderProps {
   image?: string;
@@ -17,9 +18,13 @@ interface HeaderProps {
 }
 
 export const Header = ({ image, email }: HeaderProps) => {
+  const router = useRouter();
   return (
     <div className="flex justify-between py-4 border-b">
-      <div className="flex items-center cursor-pointer">
+      <div className="flex items-center"
+        role="button"
+        onClick={() => router.push("/dashboard")}
+      >
         <Image
           src="/logo.png"
           width={55}

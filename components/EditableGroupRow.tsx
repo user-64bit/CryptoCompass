@@ -10,8 +10,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { modifyBlockChain } from "@/actions/modifyBlockChain";
-import { Loader2 } from "lucide-react";
+import { ExternalLink, Loader2 } from "lucide-react";
 import { Spinner } from "./spinner";
+import Link from "next/link";
 // import { LoadingSpinner } from './loading-spinner'
 
 const blockchainOptions = [
@@ -60,7 +61,12 @@ export function EditableGroupRow({
   return (
     <TableRow>
       <TableCell className="font-medium">{index + 1}</TableCell>
-      <TableCell>{publicKey}</TableCell>
+      <TableCell className="flex hover:text-blue-500 hover:underline cursor-pointer">
+        <Link target="_blank" href={`https://platform.arkhamintelligence.com/explorer?query=${publicKey}`}>
+          {publicKey}
+        </Link>
+        <ExternalLink className="w-4 h-4 ml-2" />
+      </TableCell>
       {!isLoading ? (
         <TableCell>
           <Select value={blockchain} onValueChange={handleOnChange}>

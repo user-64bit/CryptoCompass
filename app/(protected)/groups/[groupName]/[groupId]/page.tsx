@@ -1,5 +1,8 @@
 import { getGroupItemsAction } from "@/actions/getGroupItems";
+import { updateDBAction } from "@/actions/updateDB";
 import { EditableGroupRow } from "@/components/EditableGroupRow";
+import { RefreshDB } from "@/components/refreshDB";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -24,16 +27,19 @@ export default async function Group({
 }) {
   const session = await getServerSession();
 
-  const Items = await getGroupItemsAction({
+  const items = await getGroupItemsAction({
     groupId: params.groupId,
     userId: session?.user?.email!,
   });
 
   return (
     <div className="container mx-auto py-10">
-      <h2 className="text-center text-2xl font-bold pb-10">
+      <h2 className="text-center text-2xl font-bold pb-5">
         Group: #{params.groupName.split("-").join(" ")}
       </h2>
+      <div className="flex justify-end pb-5">
+        <RefreshDB items={items} />
+      </div>
       <Table>
         <TableCaption>
           A list of public keys of #{params.groupName.split("-").join(" ")}.
@@ -59,7 +65,7 @@ export default async function Group({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {Items?.map((item, index) => (
+          {items?.map((item, index) => (
             <EditableGroupRow
               key={item.id}
               id={item.id}
@@ -67,7 +73,7 @@ export default async function Group({
               index={index}
               publicKey={item.name}
               initialBlockchain={item.blockchain}
-              balance={item.balance}
+              balance={(parseFloat(item.balanceCrypto) * parseFloat(item.cryptoToUSD)).toFixed(2)}
             />
           ))}
         </TableBody>
@@ -75,7 +81,7 @@ export default async function Group({
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
             <TableCell className="text-right">
-              ${Items.reduce((acc, item) => acc + parseFloat(item.balance), 0)}
+              ${items.reduce((acc, item) => acc + (parseFloat(item.balanceCrypto) * parseFloat(item.cryptoToUSD)), 0)}
             </TableCell>
           </TableRow>
         </TableFooter>

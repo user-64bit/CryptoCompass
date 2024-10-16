@@ -2,7 +2,11 @@
 
 import db from "@/db";
 import { getBlockChainByPublicKey } from "@/lib/getBlockChainByPublicKey";
-import { uniq } from "@/lib/helper";
+import {
+  getCryptoBalanceByPublicKey,
+  getCryptoPriceInUSD,
+  uniq,
+} from "@/lib/helper";
 
 interface CreateGroupActionProps {
   name: string;
@@ -27,14 +31,26 @@ export const createGroupAction = async ({
       },
     });
 
+    const publicKeyData = await Promise.all(
+      uniqePublicKeys.map(async (publicKey) => {
+        const blockchain = getBlockChainByPublicKey(publicKey);
+        const balanceCrypto = await getCryptoBalanceByPublicKey(
+          blockchain,
+          publicKey,
+        );
+        const cryptoToUSD = await getCryptoPriceInUSD(blockchain);
+        return {
+          name: publicKey.trim(),
+          userId,
+          groupId: group.id,
+          balanceCrypto,
+          cryptoToUSD,
+          blockchain,
+        };
+      }),
+    );
     const items = await db.publicKey.createMany({
-      data: uniqePublicKeys.map((publicKey) => ({
-        name: publicKey,
-        userId,
-        groupId: group.id,
-        balance: "100",
-        blockchain: getBlockChainByPublicKey(publicKey),
-      })),
+      data: publicKeyData,
     });
 
     return group;

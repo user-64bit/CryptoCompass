@@ -17,11 +17,13 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Spinner } from "./spinner";
 
 export const CreateGroup = () => {
   const [groupName, setGroupName] = useState("");
   const [publicKeys, setPublicKeys] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
   const session = useSession();
   const router = useRouter();
 
@@ -32,24 +34,35 @@ export const CreateGroup = () => {
     if (!groupName || !publicKeys) {
       return;
     }
+    setIsCreating(true);
     const group = await createGroupAction({
       name: groupName,
       publicKeys,
       userId: session.data?.user?.email!,
     });
-    if (group) {
+    // Todo: add a delay to avoid rate limit
+    const delay = publicKeys.split(",").map((key) => key.trim()).length;
+    const promise = new Promise((resolve) => setTimeout(resolve, delay * 1000));
+    try {
+      await Promise.all([group, promise]);
       toast("Group has been created", {
         description:
           "It will take a few seconds to generate your beatuful group",
       });
+    } catch (err) {
+      console.error(err);
+      toast("Error creating group", {
+        description: "Please try again later",
+      });
+    } finally {
+      setGroupName("");
+      setPublicKeys("");
+      setIsCreating(false);
+      setIsDialogOpen(false);
+      // Todo: redirect to /Groupid
+      router.refresh();
     }
-    setIsDialogOpen(false);
-    setGroupName("");
-    setPublicKeys("");
-    // Todo: redirect to /Groupid
-    router.refresh();
   };
-
   const handleInputChange = (
     field: "groupName" | "publicKeys",
     value: string,
@@ -132,7 +145,7 @@ export const CreateGroup = () => {
             onClick={handleCreateGroup}
             disabled={!groupName || !publicKeys}
           >
-            Save changes
+            {isCreating ? <Spinner /> : "Save changes"}
           </Button>
         </DialogFooter>
       </DialogContent>

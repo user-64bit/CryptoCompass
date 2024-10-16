@@ -8,12 +8,14 @@
 
     -> Then Disconnect and connect another wallet to import all public from that wallet too.
 
--> Create Groups
+-> ~~Create Groups~~
 
--> Tabular View and Grid View
+-> ~~Tabular View~~ and Grid View
 
--> Sum of total money group wise
+-> ~~Sum of total money group wise~~
 
 -> Your Portfolio worth, yesterday, month ago, year ago, after year (just prediction)
 
 -> implement JWT
+
+- 
