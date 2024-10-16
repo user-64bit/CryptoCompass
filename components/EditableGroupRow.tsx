@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { TableCell, TableRow } from "@/components/ui/table";
+import { modifyBlockChain } from "@/actions/modifyBlockChain";
 import {
   Select,
   SelectContent,
@@ -9,11 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { modifyBlockChain } from "@/actions/modifyBlockChain";
-import { ExternalLink, Loader2 } from "lucide-react";
-import { Spinner } from "./spinner";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { ExternalLink } from "lucide-react";
 import Link from "next/link";
-// import { LoadingSpinner } from './loading-spinner'
+import { useState } from "react";
+import { Spinner } from "./spinner";
 
 const blockchainOptions = [
   "Bitcoin",
@@ -27,6 +26,7 @@ const blockchainOptions = [
 export function EditableGroupRow({
   id,
   groupId,
+  nickName,
   index,
   publicKey,
   initialBlockchain,
@@ -34,6 +34,7 @@ export function EditableGroupRow({
 }: {
   id: string;
   groupId: string;
+  nickName: string;
   index: number;
   publicKey: string;
   initialBlockchain: string;
@@ -61,11 +62,12 @@ export function EditableGroupRow({
   return (
     <TableRow>
       <TableCell className="font-medium">{index + 1}</TableCell>
+      <TableCell className="font-medium">{nickName}</TableCell>
       <TableCell className="flex hover:text-blue-500 hover:underline cursor-pointer">
-        <Link target="_blank" href={`https://platform.arkhamintelligence.com/explorer?query=${publicKey}`}>
+        <Link className="pt-1.5" target="_blank" href={`https://platform.arkhamintelligence.com/explorer?query=${publicKey}`}>
           {publicKey}
         </Link>
-        <ExternalLink className="w-4 h-4 ml-2" />
+        <ExternalLink className="w-4 h-4 ml-2 mt-1.5" />
       </TableCell>
       {!isLoading ? (
         <TableCell>

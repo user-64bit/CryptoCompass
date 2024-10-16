@@ -24,6 +24,7 @@ export const getGroupItemsAction = async ({
       blockchain: true,
       balanceCrypto: true,
       cryptoToUSD: true,
+      nickName: true,
     },
   });
 

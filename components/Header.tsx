@@ -25,13 +25,14 @@ export const Header = ({ image, email }: HeaderProps) => {
         role="button"
         onClick={() => router.push("/dashboard")}
       >
-        <Image
+        {/* Todo: find better logo */}
+        {/* <Image
           src="/logo.png"
           width={55}
           height={55}
           alt="Logo"
           className="rounded-full"
-        />
+        /> */}
         <span className="text-2xl font-bold ml-2">
           <GradientFontTitle text="Crypto Compass" className="" />
         </span>

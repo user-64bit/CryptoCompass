@@ -15,14 +15,17 @@ import { Spinner } from "./spinner";
 export const AddPublicKey = ({
   groupName,
   groupId,
+  isCentered = false,
 }: {
   groupName: string;
   groupId: string;
+  isCentered?: boolean;
 }) => {
 
   const [publicKey, setPublicKey] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const [nickName, setNickName] = useState("");
   const session = useSession();
   const router = useRouter();
 
@@ -34,6 +37,7 @@ export const AddPublicKey = ({
     setIsAdding(true);
     const group = await addPublicKeyAction({
       userId: session.data?.user?.email!,
+      nickName,
       groupId,
       publicKey,
       blockchain: "Ethereum"
@@ -60,7 +64,10 @@ export const AddPublicKey = ({
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button>
+        <Button
+          className={isCentered ? "bg-gradient-to-br from-purple-500 to-blue-500 font-bold hover:opacity-80 text-white" : ""}
+          size={isCentered ? "lg" : "default"}
+        >
           Add Publickey
         </Button>
       </DialogTrigger>
@@ -72,6 +79,21 @@ export const AddPublicKey = ({
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="nickName" className="font-semibold">
+              Nick Name
+            </Label>
+            <Input
+              id="nickName"
+              value={nickName}
+              onChange={(e) => {
+                e.preventDefault();
+                setNickName(e.target.value);
+              }}
+              className="col-span-3"
+              placeholder="nickName (optional)"
+            />
+          </div>
           <div className="space-y-2">
             <Label htmlFor="pkey" className="font-semibold">
               Public key

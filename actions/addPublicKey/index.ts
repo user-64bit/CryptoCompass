@@ -5,11 +5,13 @@ import { getCryptoBalanceByPublicKey, getCryptoPriceInUSD } from "@/lib/helper";
 
 export const addPublicKeyAction = async ({
   userId,
+  nickName,
   groupId,
   blockchain,
   publicKey,
 }: {
   userId: string;
+  nickName: string;
   groupId: string;
   blockchain: string;
   publicKey: string;
@@ -23,8 +25,8 @@ export const addPublicKeyAction = async ({
       name: true,
     },
   });
-  const existingPkeysList = existingPkeys.map(pkey => pkey.name);
-  if(existingPkeysList.includes(publicKey)){
+  const existingPkeysList = existingPkeys.map((pkey) => pkey.name);
+  if (existingPkeysList.includes(publicKey)) {
     // Todo: write something useful to send to client side
     return null;
   }
@@ -32,6 +34,7 @@ export const addPublicKeyAction = async ({
     const data = await db.publicKey.create({
       data: {
         name: publicKey,
+        nickName,
         userId,
         groupId,
         blockchain,

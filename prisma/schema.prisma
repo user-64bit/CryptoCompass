@@ -37,6 +37,7 @@ model Group {
 
 model PublicKey {
   id            String   @id @default(cuid())
+  nickName      String   @default("Wallet Address")
   name          String
   userId        String
   groupId       String
