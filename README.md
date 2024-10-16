@@ -18,4 +18,13 @@
 
 -> implement JWT
 
-- 
+<!-- Todo -->
+
+- ~~First of Remove Public Keys Textarea from Create Group section(only create group)~~
+- ~~remove p_key~~
+- ~~add one public_key at one time (remove multiple public keys options)~~
+- Only ethereum supports avalaible
+
+<!-- Bugfix -->
+
+- ~~spinner is not showing even though setIsCreating is getting triggered...~~

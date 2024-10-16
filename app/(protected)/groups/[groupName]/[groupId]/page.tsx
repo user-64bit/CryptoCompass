@@ -1,8 +1,7 @@
 import { getGroupItemsAction } from "@/actions/getGroupItems";
-import { updateDBAction } from "@/actions/updateDB";
+import { AddPublicKey } from "@/components/addPublicKey";
 import { EditableGroupRow } from "@/components/EditableGroupRow";
 import { RefreshDB } from "@/components/refreshDB";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -37,7 +36,8 @@ export default async function Group({
       <h2 className="text-center text-2xl font-bold pb-5">
         Group: #{params.groupName.split("-").join(" ")}
       </h2>
-      <div className="flex justify-end pb-5">
+      <div className="flex justify-between pb-5">
+        <AddPublicKey groupName={params.groupName} groupId={params.groupId}/>
         <RefreshDB items={items} />
       </div>
       <Table>
