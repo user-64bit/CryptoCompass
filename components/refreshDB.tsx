@@ -19,10 +19,8 @@ export const RefreshDB = ({ items }: any) => {
     }
   };
   return (
-    <Button
-      onClick={async () => handleRefreshDB()}
-    >
+    <Button onClick={async () => handleRefreshDB()}>
       {isLoading ? <Spinner /> : "Refresh DB"}
     </Button>
-  )
-}
+  );
+};

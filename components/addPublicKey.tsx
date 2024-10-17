@@ -6,7 +6,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { validationMessage } from "./validationMessage";
@@ -21,7 +29,6 @@ export const AddPublicKey = ({
   groupId: string;
   isCentered?: boolean;
 }) => {
-
   const [publicKey, setPublicKey] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
@@ -29,7 +36,9 @@ export const AddPublicKey = ({
   const session = useSession();
   const router = useRouter();
 
-  const handleAddPublicKey = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleAddPublicKey = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     e.preventDefault();
     if (!publicKey) {
       return;
@@ -40,7 +49,7 @@ export const AddPublicKey = ({
       nickName,
       groupId,
       publicKey,
-      blockchain: "Ethereum"
+      blockchain: "Ethereum",
     });
     // Todo: add a delay to avoid rate limit
     const delay = publicKey.split(",").map((key) => key.trim()).length;
@@ -59,13 +68,17 @@ export const AddPublicKey = ({
       setIsAdding(false);
       router.refresh();
     }
-  }
+  };
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Button
-          className={isCentered ? "bg-gradient-to-br from-purple-500 to-blue-500 font-bold hover:opacity-80 text-white" : ""}
+          className={
+            isCentered
+              ? "bg-gradient-to-br from-purple-500 to-blue-500 font-bold hover:opacity-80 text-white"
+              : ""
+          }
           size={isCentered ? "lg" : "default"}
         >
           Add Publickey
@@ -117,14 +130,10 @@ export const AddPublicKey = ({
             onClick={(e) => handleAddPublicKey(e)}
             disabled={!publicKey}
           >
-            {
-              isAdding ? <Spinner /> : "Add"
-            }
+            {isAdding ? <Spinner /> : "Add"}
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-
-  )
-}
-
+  );
+};

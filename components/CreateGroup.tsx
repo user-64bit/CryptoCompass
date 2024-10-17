@@ -27,7 +27,6 @@ export const CreateGroup = () => {
   const session = useSession();
   const router = useRouter();
 
-
   const handleCreateGroup = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {

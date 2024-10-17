@@ -64,7 +64,11 @@ export function EditableGroupRow({
       <TableCell className="font-medium">{index + 1}</TableCell>
       <TableCell className="font-medium">{nickName}</TableCell>
       <TableCell className="flex hover:text-blue-500 hover:underline cursor-pointer">
-        <Link className="pt-1.5" target="_blank" href={`https://platform.arkhamintelligence.com/explorer?query=${publicKey}`}>
+        <Link
+          className="pt-1.5"
+          target="_blank"
+          href={`https://platform.arkhamintelligence.com/explorer?query=${publicKey}`}
+        >
           {publicKey}
         </Link>
         <ExternalLink className="w-4 h-4 ml-2 mt-1.5" />

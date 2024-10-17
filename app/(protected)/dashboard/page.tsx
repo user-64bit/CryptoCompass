@@ -13,8 +13,6 @@ const DashboardPage = async () => {
   }
   const groups = await getGroupsAction({ email: session.user.email! });
 
-  return (
-    <Dashboard groups={groups} />
-  );
+  return <Dashboard groups={groups} />;
 };
 export default DashboardPage;

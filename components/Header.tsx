@@ -21,7 +21,8 @@ export const Header = ({ image, email }: HeaderProps) => {
   const router = useRouter();
   return (
     <div className="flex justify-between py-4 border-b">
-      <div className="flex items-center"
+      <div
+        className="flex items-center"
         role="button"
         onClick={() => router.push("/dashboard")}
       >

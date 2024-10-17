@@ -1,23 +1,9 @@
 import { getGroupItemsAction } from "@/actions/getGroupItems";
 import { AddPublicKey } from "@/components/addPublicKey";
-import { EditableGroupRow } from "@/components/EditableGroupRow";
 import { RefreshDB } from "@/components/refreshDB";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { getServerSession } from "next-auth";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
 
 export default async function Group({
   params,
@@ -29,6 +15,17 @@ export default async function Group({
   const items = await getGroupItemsAction({
     groupId: params.groupId,
     userId: session?.user?.email!,
+  });
+  const dataItems = items.map((item) => {
+    return {
+      pkey_id: item.id,
+      name: item.name,
+      nickName: item.nickName,
+      blockchain: item.blockchain,
+      balance: (
+        parseFloat(item.cryptoToUSD) * parseFloat(item.balanceCrypto)
+      ).toFixed(2),
+    };
   });
 
   return (
@@ -56,63 +53,12 @@ export default async function Group({
         </div>
       )}
       {items.length > 0 && (
-        <Table>
-          <TableCaption>
-            A list of public keys of #{params.groupName.split("-").join(" ")}.
-          </TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">#</TableHead>
-              <TableHead>Nick Name</TableHead>
-              <TableHead>Public Key</TableHead>
-              <TableHead className="text-center">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <p>Block Chain*</p>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>
-                      We tried to predict the blockchain, but if we're not
-                      correct then you can change it.
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-              </TableHead>
-              <TableHead className="text-right">Balance($)</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {items?.map((item, index) => (
-              <EditableGroupRow
-                key={item.id}
-                id={item.id}
-                index={index}
-                nickName={item.nickName}
-                groupId={item.groupId}
-                publicKey={item.name}
-                initialBlockchain={item.blockchain}
-                balance={(
-                  parseFloat(item.balanceCrypto) * parseFloat(item.cryptoToUSD)
-                ).toFixed(2)}
-              />
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={4}>Total</TableCell>
-              <TableCell className="text-right">
-                $
-                {items.reduce(
-                  (acc, item) =>
-                    acc +
-                    parseFloat(item.balanceCrypto) *
-                      parseFloat(item.cryptoToUSD),
-                  0,
-                )}
-              </TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
+        <DataTable
+          columns={columns}
+          data={dataItems}
+          userId={session?.user?.email!}
+          groupId={params.groupId}
+        />
       )}
     </div>
   );
