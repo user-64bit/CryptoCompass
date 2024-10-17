@@ -29,8 +29,8 @@ export default async function Group({
   });
 
   return (
-    <div className="container mx-auto py-10">
-      <h2 className="text-center text-2xl font-bold pb-5">
+    <div className="mx-auto py-10">
+      <h2 className="text-center text-2xl font-bold pb-5 underline">
         Group: #{params.groupName.split("-").join(" ")}
       </h2>
       {items.length > 0 ? (

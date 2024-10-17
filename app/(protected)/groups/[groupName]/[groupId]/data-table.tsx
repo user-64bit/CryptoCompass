@@ -14,6 +14,17 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 
+import { deletePublicKeysAction } from "@/actions/deletePublicKeys";
+import { Spinner } from "@/components/spinner";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -22,21 +33,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { EllipsisVertical, Trash } from "lucide-react";
-import { toast } from "sonner";
-import { useSession } from "next-auth/react";
-import { deletePublicKeysAction } from "@/actions/deletePublicKeys";
-import { Spinner } from "@/components/spinner";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Separator } from "@/components/ui/separator";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -53,7 +54,9 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    "nickName": false,
+  });
   const [rowSelection, setRowSelection] = useState({});
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
@@ -85,7 +88,7 @@ export function DataTable<TData, TValue>({
     }
     setIsDeleting(true);
     const ids = Object.keys(rowSelection)
-    .map((rowId) => table.getRow(rowId).original)
+      .map((rowId) => table.getRow(rowId).original)
       // @ts-ignore
       .map((item) => item.pkey_id as string);
 
@@ -115,7 +118,7 @@ export function DataTable<TData, TValue>({
         <div className="flex items-center gap-x-2">
           <div
             role="button"
-            className="hover:text-red-500 hover:bg-slate-400/20 p-2 rounded-lg"
+            className="text-red-500 hover:bg-slate-400/20 p-2 rounded-lg"
             onClick={handleDeleteItems}
           >
             {isDeleting ? <Spinner /> : <Trash className="w-5 h-5" />}
@@ -165,9 +168,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                     </TableHead>
                   );
                 })}

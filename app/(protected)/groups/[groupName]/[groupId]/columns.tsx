@@ -3,7 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 export type Item = {
   pkey_id: string;
@@ -37,15 +38,28 @@ export const columns: ColumnDef<Item>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
-    header: "Name",
+    accessorKey: "nickName",
+    header: "Nickname",
   },
   {
-    accessorKey: "nickName",
-    header: () => <div className="text-center">Nick Name</div>,
-    cell: ({ row }) => (
-      <div className="text-center">{row.getValue("nickName")}</div>
-    ),
+    accessorKey: "name",
+    header: "Public Address",
+    cell: ({ row }) => {
+      return (
+        <div>
+          <Link
+            className="hover:text-blue-400 hover:underline"
+            href={`https://platform.arkhamintelligence.com/explorer/address/${row.getValue("name")}`}
+            target="_blank"
+          >
+            <p className="flex gap-x-2">
+              {row.getValue("name")}
+              <ExternalLink className="w-4 h-4"/>
+            </p>
+          </Link>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "blockchain",
