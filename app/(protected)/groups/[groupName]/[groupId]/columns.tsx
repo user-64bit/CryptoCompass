@@ -54,7 +54,7 @@ export const columns: ColumnDef<Item>[] = [
           >
             <p className="flex gap-x-2">
               {row.getValue("name")}
-              <ExternalLink className="w-4 h-4"/>
+              <ExternalLink className="w-4 h-4" />
             </p>
           </Link>
         </div>

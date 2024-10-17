@@ -19,6 +19,18 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { validationMessage } from "./validationMessage";
 import { Spinner } from "./spinner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+const blockchainOptions = [
+  // "Bitcoin",
+  "Ethereum",
+  // "Solana",
+];
 
 export const AddPublicKey = ({
   groupName,
@@ -33,6 +45,7 @@ export const AddPublicKey = ({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [nickName, setNickName] = useState("");
+  const [blockchain, setBlockchain] = useState("Ethereum");
   const session = useSession();
   const router = useRouter();
 
@@ -49,7 +62,7 @@ export const AddPublicKey = ({
       nickName,
       groupId,
       publicKey,
-      blockchain: "Ethereum",
+      blockchain,
     });
     // Todo: add a delay to avoid rate limit
     const delay = publicKey.split(",").map((key) => key.trim()).length;
@@ -106,6 +119,20 @@ export const AddPublicKey = ({
               className="col-span-3"
               placeholder="nickName (optional)"
             />
+          </div>
+          <div className="space-y-2">
+            <Select value={blockchain} onValueChange={setBlockchain}>
+              <SelectTrigger className="w-full">
+                <SelectValue>{blockchain}</SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {blockchainOptions.map((option) => (
+                  <SelectItem key={option} value={option}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="space-y-2">
             <Label htmlFor="pkey" className="font-semibold">
