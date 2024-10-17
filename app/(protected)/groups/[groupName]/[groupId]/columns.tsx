@@ -2,6 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, ExternalLink } from "lucide-react";
 import Link from "next/link";
@@ -47,16 +53,27 @@ export const columns: ColumnDef<Item>[] = [
     cell: ({ row }) => {
       return (
         <div>
-          <Link
-            className="hover:text-blue-400 hover:underline"
-            href={`https://platform.arkhamintelligence.com/explorer/address/${row.getValue("name")}`}
-            target="_blank"
-          >
-            <p className="flex gap-x-2">
-              {row.getValue("name")}
-              <ExternalLink className="w-4 h-4" />
-            </p>
-          </Link>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  className="hover:text-blue-400 hover:underline"
+                  href={`https://platform.arkhamintelligence.com/explorer/address/${row.getValue("name")}`}
+                  target="_blank"
+                >
+                  <p className="flex gap-x-2">
+                    {row.getValue("name")}
+                    <ExternalLink className="w-4 h-4" />
+                  </p>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>
+                  {row.getValue("nickName")}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       );
     },

@@ -1,7 +1,6 @@
 "use server";
 
 import db from "@/db";
-import { getBlockChainByPublicKey } from "@/lib/getBlockChainByPublicKey";
 import { getCryptoBalanceByPublicKey, getCryptoPriceInUSD } from "@/lib/helper";
 
 interface updateDBActionProps {
@@ -33,13 +32,12 @@ export const updateDBAction = async ({ items }: updateDBActionProps) => {
   const data = [];
 
   for (const item of items) {
-    const blockchain = getBlockChainByPublicKey(item.name);
     const balanceCrypto = await getCryptoBalanceByPublicKey(
-      blockchain,
+      item.blockchain,
       item.name,
     );
     await delay(1500); // delay 1500ms
-    const cryptoToUSD = await getCryptoPriceInUSD(blockchain);
+    const cryptoToUSD = await getCryptoPriceInUSD(item.blockchain);
     await delay(1500); // delay 1500ms
 
     await db.publicKey.update({
