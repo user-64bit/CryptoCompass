@@ -49,7 +49,22 @@ export const Header = ({ image, email }: HeaderProps) => {
           <DropdownMenuItem className="font-medium text-white text-muted-foreground">
             {email}
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={async () => await signOut()}>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => router.push("/how-to-use")}
+          >
+            How to Use?
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => router.push("/learn-more")}
+          >
+            Learn More
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={async () => await signOut()}
+          >
             Sign out
           </DropdownMenuItem>
         </DropdownMenuContent>

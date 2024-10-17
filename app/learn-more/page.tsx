@@ -1,4 +1,10 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+
 export default function LearnMore() {
+  const router = useRouter();
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <div className="w-1/2">
@@ -20,7 +26,18 @@ export default function LearnMore() {
           exploring NFTs, we&apos;ve got you covered with a clean, intuitive
           dashboard designed for seamless user experience.
         </p>
+        <p className="text-center text-muted-foreground">
+          Don't worry, We don't sell your data.
+        </p>
       </div>
+      <Button
+        className="font-bold mt-3"
+        size={"xl"}
+        variant={"secondary"}
+        onClick={() => router.push("/how-to-use")}
+      >
+        How to use?
+      </Button>
     </div>
   );
 }
