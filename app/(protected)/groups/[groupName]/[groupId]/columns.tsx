@@ -68,9 +68,7 @@ export const columns: ColumnDef<Item>[] = [
                 </Link>
               </TooltipTrigger>
               <TooltipContent>
-                <p>
-                  {row.getValue("nickName")}
-                </p>
+                <p>{row.getValue("nickName")}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

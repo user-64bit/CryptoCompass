@@ -4,6 +4,7 @@ import { RefreshDB } from "@/components/refreshDB";
 import { getServerSession } from "next-auth";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
+import { DropGroup } from "@/components/dropGroup";
 
 export default async function Group({
   params,
@@ -36,7 +37,10 @@ export default async function Group({
       {items.length > 0 ? (
         <div className="flex justify-between pb-5">
           <AddPublicKey groupName={params.groupName} groupId={params.groupId} />
-          <RefreshDB items={items} />
+          <div className="flex gap-x-2">
+            <RefreshDB items={items} />
+            <DropGroup groupId={params.groupId} />
+          </div>
         </div>
       ) : (
         <div className="flex justify-center items-center min-h-[calc(100vh-250px)]">
