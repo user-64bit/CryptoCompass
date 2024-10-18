@@ -3,8 +3,6 @@
 import { GradientFontTitle } from "@/components/gradient-font-title";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { Button } from "@/components/ui/button";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { WalletIcon } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
@@ -50,18 +48,6 @@ export default function Home() {
               }}
             >
               <FaGoogle className="w-8 h-8" />
-            </div>
-            <div
-              role="button"
-              onClick={async (e) => {
-                e.preventDefault();
-                await signIn("github");
-              }}
-            >
-              <GitHubLogoIcon className="w-8 h-8" />
-            </div>
-            <div>
-              <WalletIcon className="w-8 h-8" />
             </div>
           </div>
         </div>
