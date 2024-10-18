@@ -8,7 +8,9 @@ export default async function HowToUse() {
       {session?.user && <Header />}
       <div className="flex flex-col items-center justify-center min-h-screen py-2">
         <div className="relative w-full max-w-4xl p-4 rounded-lg shadow-lg">
-          <p className="text-center text-2xl font-bold pb-4">Watch Below Video</p>
+          <p className="text-center text-2xl font-bold pb-4">
+            Watch Below Video
+          </p>
           <div className="aspect-w-16 aspect-h-9">
             <iframe
               className="w-full h-[600px] rounded-lg shadow-md"

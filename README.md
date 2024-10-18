@@ -1,30 +1,27 @@
--> Sign in using Google Account (Why?)
+# Crypto Compass
 
-    -> Importing multiple accounts from different wallets
+Crypto Compass is a web application that allows users to manage their crypto wallets and track their assets.
 
--> Import Wallet
+## Features
 
-    -> Connect Wallet (get access to wallet and get all the public keys from wallet)
+- User authentication with Google
+- Dashboard to view and manage groups
+- Group creation and management
+- Asset tracking and management
+- Integration with crypto APIs
 
-    -> Then Disconnect and connect another wallet to import all public from that wallet too.
+## Video
 
--> ~~Create Groups~~
+![Video](crypto-compass.gif)
 
--> ~~Tabular View~~ and Grid View
+## Install Locally
 
--> ~~Sum of total money group wise~~
+```bash
+git clone https://github.com/user-64bit/CryptoCompass.git && cd CryptoCompass && bun install && bun run dev
+```
 
--> Your Portfolio worth, yesterday, month ago, year ago, after year (just prediction)
+```bash
+sudo docker run -d --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -p 5432:5432 postgres
+```
 
--> implement JWT
-
-<!-- Todo -->
-
-- ~~First of Remove Public Keys Textarea from Create Group section(only create group)~~
-- ~~remove p_key~~
-- ~~add one public_key at one time (remove multiple public keys options)~~
-- Only ethereum supports avalaible
-
-<!-- Bugfix -->
-
-- ~~spinner is not showing even though setIsCreating is getting triggered...~~
+rename .env.exmaple to .env add your secrets.
