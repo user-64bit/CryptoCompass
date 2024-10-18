@@ -1,10 +1,10 @@
 import { getGroupItemsAction } from "@/actions/getGroupItems";
 import { AddPublicKey } from "@/components/addPublicKey";
+import { DropGroup } from "@/components/dropGroup";
 import { RefreshDB } from "@/components/refreshDB";
 import { getServerSession } from "next-auth";
-import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { DropGroup } from "@/components/dropGroup";
+import { DataTable } from "./data-table";
 
 export default async function Group({
   params,

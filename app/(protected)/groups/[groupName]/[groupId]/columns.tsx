@@ -99,7 +99,7 @@ export const columns: ColumnDef<Item>[] = [
       return (
         <div className="text-center">
           <Button variant="ghost" onClick={() => column.toggleSorting()}>
-            Balance ($)
+            ETH Balance ($)
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
