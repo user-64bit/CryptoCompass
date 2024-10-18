@@ -51,7 +51,7 @@ export const CreateGroup = () => {
     } finally {
       setGroupName("");
       setIsCreating(false);
-      router.push(`/groups/${groupName}/${group?.id}`);
+      router.push(`/groups/${groupName.split(" ").join("-")}/${group?.id}`);
     }
   };
 
