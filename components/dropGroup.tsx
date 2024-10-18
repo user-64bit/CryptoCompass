@@ -15,7 +15,15 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 
-export const DropGroup = ({ groupId }: { groupId: string }) => {
+export const DropGroup = ({
+  groupId,
+  className,
+  size,
+}: {
+  groupId: string;
+  className?: string;
+  size?: "default" | "sm" | "lg" | "xl" | "icon" | null | undefined;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -33,7 +41,13 @@ export const DropGroup = ({ groupId }: { groupId: string }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant={"destructive"}>Delete Group</Button>
+        <Button
+          className={className}
+          variant={"destructive"}
+          size={size ? size : "default"}
+        >
+          Delete Group
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

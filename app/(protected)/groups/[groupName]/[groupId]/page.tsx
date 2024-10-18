@@ -53,6 +53,7 @@ export default async function Group({
               groupId={params.groupId}
               isCentered={true}
             />
+            <DropGroup className="ml-4" groupId={params.groupId} size={"lg"} />
           </div>
         </div>
       )}

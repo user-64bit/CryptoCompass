@@ -69,10 +69,12 @@ export const AddPublicKey = ({
     const promise = new Promise((resolve) => setTimeout(resolve, delay * 1500));
     try {
       await Promise.all([group, promise]);
-      toast("Public Key has been added(if it was not already there)...");
+      toast.success(
+        "Public Key has been added(if it was not already there)...",
+      );
     } catch (err) {
       console.error(err);
-      toast("Error creating group", {
+      toast.error("Error creating group", {
         description: "Please try again later",
       });
     } finally {

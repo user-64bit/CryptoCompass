@@ -83,7 +83,7 @@ export function DataTable<TData, TValue>({
 
   const handleDeleteItems = async () => {
     if (Object.values(rowSelection).length === 0) {
-      toast("No Item selected to delete.");
+      toast.info("No Item selected to delete.");
       return;
     }
     setIsDeleting(true);
@@ -95,7 +95,7 @@ export function DataTable<TData, TValue>({
     try {
       await deletePublicKeysAction({ ids, userId, groupId });
     } catch {
-      toast("unable to delete");
+      toast.error("unable to delete");
     } finally {
       setIsDeleting(false);
     }

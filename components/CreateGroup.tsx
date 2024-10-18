@@ -36,22 +36,22 @@ export const CreateGroup = () => {
     }
     setIsCreating(true);
     setIsDialogOpen(false);
+    let group;
     try {
-      const group = await createGroupAction({
+      group = await createGroupAction({
         name: groupName,
         userId: session.data?.user?.email!,
       });
-      toast("Group has been created");
+      toast.success("Group has been created");
     } catch (err) {
       console.error(err);
-      toast("Error creating group", {
+      toast.error("Error creating group", {
         description: "Please try again later",
       });
     } finally {
       setGroupName("");
       setIsCreating(false);
-      // Todo: redirect to /Groupid
-      router.refresh();
+      router.push(`/groups/${groupName}/${group?.id}`);
     }
   };
 

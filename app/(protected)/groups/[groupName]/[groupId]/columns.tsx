@@ -44,6 +44,16 @@ export const columns: ColumnDef<Item>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: "number",
+    header: "#",
+    cell: ({ row, table }) =>
+      (
+        (table
+          .getSortedRowModel()
+          ?.flatRows?.findIndex((flatRow) => flatRow.id === row.id) || 0) + 1
+      ).toString(),
+  },
+  {
     accessorKey: "nickName",
     header: "Nickname",
   },
@@ -57,7 +67,7 @@ export const columns: ColumnDef<Item>[] = [
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  className="hover:text-blue-400 hover:underline"
+                  className="text-blue-400 underline"
                   href={`https://platform.arkhamintelligence.com/explorer/address/${row.getValue("name")}`}
                   target="_blank"
                 >
